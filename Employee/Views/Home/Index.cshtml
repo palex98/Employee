@@ -1,0 +1,71 @@
+﻿@model IEnumerable<Employee.Models.Employees>
+<!DOCTYPE html>
+<html>
+<head>
+    @Scripts.Render("~/bundles/scripts")
+    @Scripts.Render("~/bundles/jquery")
+    @Styles.Render("~/Content/css")
+</head>
+<body>
+    <h4 id="create" onclick="toggleCreateForm()">Создать запись</h4>
+    <div class="createFormBlock" id="createFormBlock">
+        <form id="createForm">
+            <label for="firstName">Имя: </label>
+            <input id="firstName" name="firstName" type="text" /><br><br>
+            <label for="lastName">Фамилия: </label>
+            <input id="lastName" name="lastName" type="text" /><br><br>
+            <label for="salary">Размер зарплаты: </label>
+            <input id="salary" name="salary" type="number" min="0" value="0"/><br><br>
+            <label for="manager">Руководитель: </label>
+            <select id="manager" name="manager">
+                @foreach (Employee.Models.Employees option in Model)
+                {
+                    <option value="@option.Id">@option.firstName @option.lastName</option>
+                }
+            </select><br><br>
+            <input type="submit" value="Создать">
+        </form>
+    </div>
+    <table border="1">
+        <thead>
+            <tr>
+                <td>№</td>
+                <td>Имя</td>
+                <td>Фамилия</td>
+                <td>Зарплата</td>
+                <td>Руководитель</td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Employee.Models.Employees item in Model)
+            {
+                <tr id="row_@item.Id" class="tableRow">
+                    <td>@item.Id</td>
+                    <td id="firstName_@item.Id" contenteditable="false">@item.firstName</td>
+                    <td id="lastName_@item.Id" contenteditable="false">@item.lastName</td>
+                    <td id="salary_@item.Id" contenteditable="false">@item.salary</td>
+                    <td>
+                        <select id="manager_@item.Id" disabled>
+                            @foreach (Employee.Models.Employees option in Model)
+                            {
+                                if (@item.Id != @option.Id && @item.manager == @option.Id.ToString())
+                                {
+                                    <option value="@option.Id" selected>@option.firstName @option.lastName</option>
+                                }
+                                else if (@item.Id != @option.Id)
+                                {
+                                    <option value="@option.Id">@option.firstName @option.lastName</option>
+                                }
+
+                            }
+                        </select>
+                    </td>
+                    <td><button type="button" onclick="editItem(@item.Id)">Изменить</button></td>
+                    <td><button type="button" onclick="saveItem(@item.Id)" id="saveButton_@item.Id" disabled>Сохранить</button></td>
+                    <td><button type="button" onclick="deleteItem(@item.Id)">Удалить</button></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</body>
+</html>

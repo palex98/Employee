@@ -1,0 +1,34 @@
+﻿body {
+    padding: 50px;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+#firstrow {
+}
+
+#create {
+    color: darkblue;
+}
+
+    #create:hover {
+        text-decoration: underline;
+    }
+
+#createFormBlock {
+    display: none;
+}
+
+thead {
+    background: gainsboro;
+}
+
+tr {
+    border: black;
+}
+
+.createFormBlock {
+    padding-bottom: 30px;
+}
